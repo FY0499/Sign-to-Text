@@ -1,4 +1,4 @@
-# Sign-to-Text-Language
+# Sign-to-Text
 A Python experimental prototype for analyzing sign-language videos and generating a text interpretation. It uses MediaPipe hand and face landmarks alongside a Gemini model integration as part of its video-analysis pipeline.
 
 ## Problem it addresses
