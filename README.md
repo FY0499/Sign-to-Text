@@ -2,31 +2,71 @@
 
 A Python prototype for analyzing sign-language videos and generating a text interpretation. The `ASLTranslatorEnhanced` class uses MediaPipe hand and face landmarks and a Gemini model integration as part of its analysis pipeline.
 
-## Key components
+## The problem it explores
+
+Sign-language video is rich in hand movement, facial expression, and context. This project explores a model-assisted pipeline for analyzing a video and producing a text interpretation, with translation and speech-related utilities.
+
+> **Status:** Experimental prototype. Model output is not a certified sign-language translation and must be reviewed by qualified signers.
+
+## Main components
+
 - Video/image processing with OpenCV and Pillow.
 - Hand and face landmark detection using MediaPipe.
 - Gemini API integration for model-assisted video interpretation.
 - Arabic translation utilities and text-to-speech support.
-- Cleanup helpers for uploaded model files.
+- Helpers for cleaning up uploaded model files.
+
+## Demo
+
+No verified screenshot or sample output video is included yet. After testing with a short, consented sample clip, add a short GIF/video showing the input and the generated interpretation.
+
+Suggested location: `assets/demo.gif` or `assets/demo.mp4`.
 
 ## Tech stack
-Python, OpenCV, MediaPipe, Google Gen AI SDK, Pillow, deep-translator, and gTTS.
 
-## Requirements
-Python dependencies are listed in [requirements.txt](./requirements.txt).
+Python · OpenCV · MediaPipe · Google Gen AI SDK · Pillow · deep-translator · gTTS
 
 ## Setup
-1. Create and activate a virtual environment using a Python version compatible with the pinned dependencies.
-2. Install dependencies: `pip install -r requirements.txt`
-3. Configure a valid Gemini API key locally. The implementation accepts `gemini_api_key` in `ASLTranslatorEnhanced(gemini_api_key=...)`; its fallback currently references a machine-specific local file path, which must be changed for use on another machine.
-4. Never commit the API key or the local API key file.
-5. Review [STT.py](./STT.py) for the class API and test with a short, non-sensitive video.
 
-## Limitations
-Sign-language interpretation is complex and context-dependent. Model-generated interpretations can be inaccurate, and ASL is not interchangeable with other sign languages. Treat output as experimental and have qualified signers review results before any real-world use.
+Use a Python version compatible with the pinned dependencies.
 
-## Security and privacy
-Video can contain biometric and identifying information. Use consented test material, protect uploaded files, and ensure temporary or remote files are cleaned up appropriately.
+```bash
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+# macOS/Linux:
+# source .venv/bin/activate
 
-## Project status
-Prototype implementation. Verify model availability, API access, supported video formats, and end-to-end behavior in your environment.
+pip install -r requirements.txt
+```
+
+## Configure the Gemini API key
+
+The class accepts a key explicitly:
+
+```python
+from STT import ASLTranslatorEnhanced
+
+translator = ASLTranslatorEnhanced(gemini_api_key="LOAD_YOUR_KEY_SECURELY")
+```
+
+Replace the example string with a key loaded securely from an environment variable or secret manager. Never commit a real API key. The current fallback in `STT.py` references a machine-specific Windows path and should be replaced with portable configuration before sharing the project.
+
+## Run
+
+`python STT.py` currently defines the class but does not launch a complete interactive application. Create a separate demo script that loads a short video, initializes the translator with a securely configured key, and calls the relevant public video-processing method. Check the available methods in [STT.py](./STT.py) before building the script.
+
+## Limitations and privacy
+
+- Model interpretations may be inaccurate or miss context.
+- ASL is distinct from Arabic/Jordanian Sign Language and other sign languages.
+- Use only video you have permission to process. Videos may contain identifying or biometric information.
+- Confirm temporary and remotely uploaded files are cleaned up appropriately.
+
+## Roadmap
+
+- [ ] Replace the machine-specific API key fallback with environment-variable configuration.
+- [ ] Add a tested example script and clear input/output format.
+- [ ] Include a real demo clip and sample output using consented data.
+- [ ] Add tests and error handling for invalid video, API failures, and unsupported formats.
+- [ ] Document latency, model limitations, and supported Python versions.
