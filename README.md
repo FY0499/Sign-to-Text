@@ -1,48 +1,51 @@
 # ASL Video Translator
 
-A Python prototype for analyzing sign-language videos and generating a text interpretation. The `ASLTranslatorEnhanced` class uses MediaPipe hand and face landmarks and a Gemini model integration as part of its analysis pipeline.
+A Python experimental prototype for analyzing sign-language videos and generating a text interpretation. It uses MediaPipe hand and face landmarks alongside a Gemini model integration as part of its video-analysis pipeline.
 
-## The problem it explores
+## Problem it addresses
 
-Sign-language video is rich in hand movement, facial expression, and context. This project explores a model-assisted pipeline for analyzing a video and producing a text interpretation, with translation and speech-related utilities.
+Sign language conveys meaning through hand movement, facial expression, and context. This project explores a model-assisted workflow for interpreting a video and producing text that can support further translation or speech output.
 
-> **Status:** Experimental prototype. Model output is not a certified sign-language translation and must be reviewed by qualified signers.
+> **Status:** Experimental prototype. Model-generated interpretations are not certified sign-language translations and must be reviewed by qualified signers.
 
 ## Main components
 
-- Video/image processing with OpenCV and Pillow.
-- Hand and face landmark detection using MediaPipe.
+- Video and image processing with OpenCV and Pillow.
+- Hand and face landmark detection with MediaPipe.
 - Gemini API integration for model-assisted video interpretation.
-- Arabic translation utilities and text-to-speech support.
-- Helpers for cleaning up uploaded model files.
+- Arabic translation utilities and gTTS support.
 
 ## Demo
 
-No verified screenshot or sample output video is included yet. After testing with a short, consented sample clip, add a short GIF/video showing the input and the generated interpretation.
+A verified screenshot or sample output video is not currently included. After testing with a short, consented clip, add a real GIF or video under `assets/demo.gif` or `assets/demo.mp4` and embed it here.
 
-Suggested location: `assets/demo.gif` or `assets/demo.mp4`.
+## Technologies
 
-## Tech stack
+Python, OpenCV, MediaPipe, Google Gen AI SDK, Pillow, deep-translator, and gTTS. See [requirements.txt](./requirements.txt) for dependencies.
 
-Python · OpenCV · MediaPipe · Google Gen AI SDK · Pillow · deep-translator · gTTS
-
-## Setup
-
-Use a Python version compatible with the pinned dependencies.
+## Installation
 
 ```bash
+git clone https://github.com/FY0499/STT.git
+cd STT
 python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# macOS/Linux:
-# source .venv/bin/activate
+```
 
+Windows:
+```powershell
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+macOS/Linux:
+```bash
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Configure the Gemini API key
 
-The class accepts a key explicitly:
+The class accepts an API key explicitly. Load your key securely from an environment variable or secret manager and never commit a real key.
 
 ```python
 from STT import ASLTranslatorEnhanced
@@ -50,23 +53,23 @@ from STT import ASLTranslatorEnhanced
 translator = ASLTranslatorEnhanced(gemini_api_key="LOAD_YOUR_KEY_SECURELY")
 ```
 
-Replace the example string with a key loaded securely from an environment variable or secret manager. Never commit a real API key. The current fallback in `STT.py` references a machine-specific Windows path and should be replaced with portable configuration before sharing the project.
+The string above is a placeholder, not a working credential. The current `STT.py` implementation also references a machine-specific Windows path as a fallback; make the configuration portable before using the project on another machine.
 
-## Run
+## Usage status
 
-`python STT.py` currently defines the class but does not launch a complete interactive application. Create a separate demo script that loads a short video, initializes the translator with a securely configured key, and calls the relevant public video-processing method. Check the available methods in [STT.py](./STT.py) before building the script.
+The current `STT.py` defines a class but does not launch a complete interactive application. Consequently, `python STT.py` should not be presented as a finished demo. Inspect the available public methods in [STT.py](./STT.py) and create a separate tested script that loads a short video, initializes the translator securely, and calls the appropriate video-processing method.
 
 ## Limitations and privacy
 
-- Model interpretations may be inaccurate or miss context.
+- Model interpretations may be inaccurate or miss linguistic context.
 - ASL is distinct from Arabic/Jordanian Sign Language and other sign languages.
-- Use only video you have permission to process. Videos may contain identifying or biometric information.
-- Confirm temporary and remotely uploaded files are cleaned up appropriately.
+- Use only video you have permission to process; video may contain identifying or biometric information.
+- Verify how temporary files and remotely uploaded data are handled.
 
-## Roadmap
+## Future improvements
 
-- [ ] Replace the machine-specific API key fallback with environment-variable configuration.
-- [ ] Add a tested example script and clear input/output format.
-- [ ] Include a real demo clip and sample output using consented data.
-- [ ] Add tests and error handling for invalid video, API failures, and unsupported formats.
-- [ ] Document latency, model limitations, and supported Python versions.
+- Replace the machine-specific API-key fallback with portable configuration.
+- Add a tested example script and clearly document input/output formats.
+- Include a real demo using consented sample data.
+- Add tests for invalid videos, API failures, and unsupported formats.
+- Document latency and model limitations.
