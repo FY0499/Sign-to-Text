@@ -1,74 +1,41 @@
 # Sign-to-Text
-A Python experimental prototype for analyzing sign-language videos and generating a text interpretation. It uses MediaPipe hand and face landmarks alongside a Gemini model integration as part of its video-analysis pipeline.
 
-## Problem it addresses
+A sign-language translation system that helps people who use sign language communicate with people who do not understand it. The user performs signs in front of the camera, and the system analyzes the video, turns the signs into text, and provides spoken output so the other person can understand the message.
 
-Sign language conveys meaning through hand movement, facial expression, and context. This project explores a model-assisted workflow for interpreting a video and producing text that can support further translation or speech output.
+## How it works
 
-> **Status:** Experimental prototype. Model-generated interpretations are not certified sign-language translations and must be reviewed by qualified signers.
+1. The camera captures the sign-language movements.
+2. MediaPipe detects hand and face landmarks in the video frames.
+3. Gemini analyzes the video and generates a text interpretation.
+4. The result can be translated into Arabic and played as audio.
 
-## Main components
+## Features
 
-- Video and image processing with OpenCV and Pillow.
-- Hand and face landmark detection with MediaPipe.
-- Gemini API integration for model-assisted video interpretation.
-- Arabic translation utilities and gTTS support.
-
-## Demo
-
-A verified screenshot or sample output video is not currently included. After testing with a short, consented clip, add a real GIF or video under `assets/demo.gif` or `assets/demo.mp4` and embed it here.
+- Hand and face landmark detection.
+- Video analysis using Gemini.
+- Text interpretation and Arabic translation.
+- Audio output for spoken communication.
+- Flutter frame-processing integration.
 
 ## Technologies
 
-Python, OpenCV, MediaPipe, Google Gen AI SDK, Pillow, deep-translator, and gTTS. See [requirements.txt](./requirements.txt) for dependencies.
+Python, OpenCV, MediaPipe, Google Gen AI SDK, Pillow, deep-translator, and gTTS.
 
-## Installation
+## Setup
 
 ```bash
-git clone https://github.com/FY0499/STT.git
-cd STT
+git clone https://github.com/FY0499/Sign-to-Text.git
+cd Sign-to-Text
 python -m venv .venv
-```
-
-Windows:
-```powershell
-.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-macOS/Linux:
-```bash
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-## Configure the Gemini API key
-
-The class accepts an API key explicitly. Load your key securely from an environment variable or secret manager and never commit a real key.
+Initialize the translator with your Gemini API key:
 
 ```python
 from STT import ASLTranslatorEnhanced
 
-translator = ASLTranslatorEnhanced(gemini_api_key="LOAD_YOUR_KEY_SECURELY")
+translator = ASLTranslatorEnhanced(gemini_api_key="YOUR_GEMINI_API_KEY")
 ```
 
-The string above is a placeholder, not a working credential. The current `STT.py` implementation also references a machine-specific Windows path as a fallback; make the configuration portable before using the project on another machine.
-
-## Usage status
-
-The current `STT.py` defines a class but does not launch a complete interactive application. Consequently, `python STT.py` should not be presented as a finished demo. Inspect the available public methods in [STT.py](./STT.py) and create a separate tested script that loads a short video, initializes the translator securely, and calls the appropriate video-processing method.
-
-## Limitations and privacy
-
-- Model interpretations may be inaccurate or miss linguistic context.
-- ASL is distinct from Arabic/Jordanian Sign Language and other sign languages.
-- Use only video you have permission to process; video may contain identifying or biometric information.
-- Verify how temporary files and remotely uploaded data are handled.
-
-## Future improvements
-
-- Replace the machine-specific API-key fallback with portable configuration.
-- Add a tested example script and clearly document input/output formats.
-- Include a real demo using consented sample data.
-- Add tests for invalid videos, API failures, and unsupported formats.
-- Document latency and model limitations.
+The main implementation is in [STT.py](./STT.py).
